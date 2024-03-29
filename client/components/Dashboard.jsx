@@ -1,11 +1,11 @@
-import { Button } from "./ui/button";
 import Sidebar from "./Sidebar";
 import SheetSidebar from "./SheetSidebar";
 import { Card, CardHeader, CardContent, CardDescription } from "./ui/card";
+import ThemeToggle from "./ThemeToggle";
 
 export const Dashboard = () => {
   return (
-    <div className="min-h-screen w-screen flex flex-row">
+    <div className="min-h-screen w-screen flex flex-row dark:bg-black bg-gray-200">
       <div className="w-1/3 hidden border-r bg-muted/40 md:block">
         <Sidebar />
       </div>
@@ -14,14 +14,15 @@ export const Dashboard = () => {
           <SheetSidebar />
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
+          <div className="flex items-center flex-row justify-between">
             <h1 className="text-lg font-semibold md:text-2xl">Results:</h1>
+            <ThemeToggle />
           </div>
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+          <Card className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <Card>
                 <CardHeader></CardHeader>
             </Card>
-          </div>
+          </Card>
         </main>
       </div>
     </div>

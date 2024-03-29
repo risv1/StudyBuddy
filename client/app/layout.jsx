@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
 import SessionProvider from "@/layouts/SessionProvider";
+import { ThemeProvider } from "@/layouts/ThemeProvider";
 import { getServerSession } from "next-auth";
 
 const fontSans = FontSans({
@@ -25,7 +26,16 @@ export default async function RootLayout({ children }) {
           fontSans.variable
         )}
       >
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
