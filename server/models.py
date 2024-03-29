@@ -11,8 +11,9 @@ class TopicInfo(BaseModel):
     subject: str
     topic: str
     name: str
-    blog_articles_urls: List[str]
-    youtube_interviews_urls: List[NamedUrl]
+    quicstart_pointers: List[str]
+    article_urls: List[str]
+    youtube_urls: List[NamedUrl]
 
 
 class TopicInfoList(BaseModel):

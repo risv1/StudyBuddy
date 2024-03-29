@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
-import { ThemeProvider } from "@/layouts/ThemeProvider";
+import { ThemeProvider } from "../layouts/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const fontSans = FontSans({
@@ -33,7 +33,7 @@ export default async function RootLayout({ children }) {
           >
             {children}
           </ThemeProvider>
-          </ClerkProvider>
+        </ClerkProvider>
       </body>
     </html>
   );
