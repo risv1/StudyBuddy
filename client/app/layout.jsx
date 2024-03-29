@@ -1,8 +1,9 @@
 import { cn } from "../lib/utils";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
-import { ThemeProvider } from "../layouts/ThemeProvider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "../layouts/ThemeProvider";
+import PromptProvider from "../layouts/PromptProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -15,7 +16,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-
   return (
     <html lang="en">
       <body
@@ -25,14 +25,16 @@ export default async function RootLayout({ children }) {
         )}
       >
         <ClerkProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <PromptProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </PromptProvider>
         </ClerkProvider>
       </body>
     </html>

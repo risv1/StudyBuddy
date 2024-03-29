@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Input } from "./ui/input";
 import { Home, Package } from "lucide-react";
 import {
@@ -12,10 +12,10 @@ import {
 } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
+import { usePrompt } from "@/layouts/PromptProvider";
 
 const Sidebar = () => {
-  const [topics, setTopics] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  const { subjects, setSubjects, topics, setTopics, startJob, running } = usePrompt();
 
   const subjectRef = useRef();
   const topicRef = useRef();
@@ -33,18 +33,6 @@ const Sidebar = () => {
       setSubjects([...subjects, newSubject]);
       subjectRef.current.value = "";
     }
-  };
-
-  const removeSubject = (index) => {
-    const updatedSubjects = [...subjects];
-    updatedSubjects.splice(index, 1);
-    setSubjects(updatedSubjects);
-  };
-
-  const removeTopic = (index) => {
-    const updatedTopics = [...topics];
-    updatedTopics.splice(index, 1);
-    setTopics(updatedTopics);
   };
 
   return (
@@ -97,60 +85,8 @@ const Sidebar = () => {
                 <Button onClick={addTopic}>Add Topic</Button>
               </CardContent>
             </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Added Subjects</CardTitle>
-              </CardHeader>
-              <CardContent className="flex justify-center overflow-y-auto">
-                <ScrollArea className="w-full h-full flex pl-10">
-                  <div className="w-2/3 max-h-48 flex flex-col">
-                    <ul className="flex flex-col gap-3">
-                      {subjects.map((subject, index) => (
-                        <li
-                          key={index}
-                          className="flex items-center justify-between flex-row"
-                        >
-                          <span className="text-lg">{subject}</span>
-                          <Button
-                            className="text-xs bg-red-500 hover:bg-red-700 dark:text-white dark:bg-red-500 dark:hover:bg-red-700"
-                            onClick={() => removeSubject(index)}
-                          >
-                            Remove
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle>Added topics</CardTitle>
-              </CardHeader>
-              <CardContent className="flex justify-center overflow-y-auto">
-                <ScrollArea className="w-full h-full flex pl-10">
-                  <div className="w-2/3 max-h-48 flex flex-col">
-                    <ul className="flex flex-col gap-3">
-                      {topics.map((topic, index) => (
-                        <li
-                          key={index}
-                          className="flex items-center justify-between flex-row"
-                        >
-                          <span className="text-lg">{topic}</span>
-                          <Button
-                            className="text-xs bg-red-500 hover:bg-red-700 dark:text-white dark:bg-red-500 dark:hover:bg-red-700"
-                            onClick={() => removeTopic(index)}
-                          >
-                            Remove
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
+           
+            <Button disabled={running} onClick={()=>startJob()}>Submit</Button>
           </div>
         </div>
       </div>
