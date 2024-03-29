@@ -1,7 +1,10 @@
+import { Button } from "@/components/ui/button";
+
 const Home = () => {
   return (
-    <div className="w-screen h-screen">
-      <h1>Mozohack</h1>
+    <div>
+      <h1>Hello</h1>
+      <Button className="ml-10">click</Button>
     </div>
   )
 }

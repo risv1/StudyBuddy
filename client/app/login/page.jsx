@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Login from "@/components/Login";
+import LoginForm from "@/components/LoginForm";
 
-const LoginForm = () => {
+const Login = () => {
   return (
     <div className="w-screen bg-slate-950 h-screen lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
       <div className="flex items-center justify-center py-12">
-        <Login />
+        <LoginForm />
       </div>
       <div className="h-full w-full hidden bg-muted lg:block">
         <div className="w-full h-full flex justify-center items-center">
@@ -22,4 +22,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Login;

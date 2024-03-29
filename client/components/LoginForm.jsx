@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-const Login = () => {
+const LoginForm = () => {
     return (
         <div className="mx-auto grid w-3/5 gap-6 border-white border-2 rounded-xl pt-20 pl-5 pr-5 pb-10">
           <div className="grid gap-2 text-center">
@@ -52,4 +52,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default LoginForm;
