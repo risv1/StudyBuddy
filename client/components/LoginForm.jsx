@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
 
@@ -31,7 +30,7 @@ const LoginForm = () => {
       <Button type="submit" className="w-full">
         Login
       </Button>
-      <Button onClick={()=>signIn("github")} variant="outline" className="w-full">
+      <Button variant="outline" className="w-full">
         Login with Github
       </Button>
     </form>

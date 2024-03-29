@@ -1,9 +1,8 @@
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google";
-import SessionProvider from "@/layouts/SessionProvider";
 import { ThemeProvider } from "@/layouts/ThemeProvider";
-import { getServerSession } from "next-auth";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -16,7 +15,6 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const session = await getServerSession();
 
   return (
     <html lang="en">
@@ -26,7 +24,7 @@ export default async function RootLayout({ children }) {
           fontSans.variable
         )}
       >
-        <SessionProvider session={session}>
+        <ClerkProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -35,7 +33,7 @@ export default async function RootLayout({ children }) {
           >
             {children}
           </ThemeProvider>
-        </SessionProvider>
+          </ClerkProvider>
       </body>
     </html>
   );
