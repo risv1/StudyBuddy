@@ -58,16 +58,11 @@ const Home = () => {
             >
               Get Started
             </Link>
-            <Link
-              className="w-2/3 inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm gap-2 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
-              href="/login"
-            >
-              Login to your Account
-            </Link>
+
           </div>
         </main>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="bg-white dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
+          <div className="bg-white hover:cursor-pointer dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
             <h3 className="text-xl font-semibold mb-2">
               Personalized Learning
             </h3>
@@ -76,14 +71,14 @@ const Home = () => {
               ensuring a customized educational experience.
             </p>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
+          <div className="bg-white hover:cursor-pointer dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
             <h3 className="text-xl font-semibold mb-2">AI-Powered Insights</h3>
             <p className="text-gray-700 dark:text-gray-300">
               Utilize cutting-edge AI algorithms to gain deep insights and
               recommendations for optimizing your learning journey.
             </p>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
+          <div className="bg-white hover:cursor-pointer dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
             <h3 className="text-xl font-semibold mb-2">
               Diverse Learning Materials
             </h3>
@@ -92,7 +87,7 @@ const Home = () => {
               resources covering a wide range of subjects and topics.
             </p>
           </div>
-          <div className="bg-white dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
+          <div className="bg-white hover:cursor-pointer dark:bg-gray-800 p-6 duration-100 ease-in-out rounded-lg shadow-md hover:bg-gray-100 dark:hover:bg-gray-900">
             <h3 className="text-xl font-semibold mb-2">Engaging Experiences</h3>
             <p className="text-gray-700 dark:text-gray-300">
               Immerse yourself in interactive and engaging learning adventures

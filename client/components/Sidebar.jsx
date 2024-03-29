@@ -64,7 +64,7 @@ const Sidebar = () => {
                   placeholder="Enter subject"
                   className="border border-black focus:outline-none"
                 />
-                <Button onClick={addSubject}>
+                <Button disabled={running} onClick={addSubject}>
                   Add Subject
                 </Button>
               </CardContent>
@@ -82,11 +82,11 @@ const Sidebar = () => {
                   placeholder="Enter topic"
                   className="border border-black focus:outline-none"
                 />
-                <Button onClick={addTopic}>Add Topic</Button>
+                <Button disabled={running} onClick={addTopic}>Add Topic</Button>
               </CardContent>
             </Card>
            
-            <Button disabled={running} onClick={()=>startJob()}>Submit</Button>
+            <Button disabled={running || subjects.length === 0 || topics.length === 0} onClick={()=>startJob()}>Submit</Button>
           </div>
         </div>
       </div>

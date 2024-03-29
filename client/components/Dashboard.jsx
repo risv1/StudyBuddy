@@ -2,9 +2,15 @@ import Sidebar from "./Sidebar";
 import SheetSidebar from "./SheetSidebar";
 import ThemeToggle from "./ThemeToggle";
 import ResultLogs from "./ResultLogs";
+import HomeDesc from "./HomeDesc";
 import Output from "./Output";
+import { usePrompt } from "@/layouts/PromptProvider";
+import ListSubTop from "./ListSubTop";
+import { UserButton } from "@clerk/nextjs"; 
 
 export const Dashboard = () => {
+  const { running } = usePrompt();
+
   return (
     <div className="min-h-screen w-screen flex flex-row dark:bg-black bg-gray-200">
       <div className="w-1/3 hidden border-r dark:border-slate-700 border-gray-400 bg-muted/40 md:block">
@@ -16,12 +22,21 @@ export const Dashboard = () => {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div className="flex items-center flex-row justify-between">
-            <h1 className="text-lg font-semibold md:text-2xl">Results:</h1>
-            <ThemeToggle />
+            <h1 className="text-lg font-semibold md:text-2xl">Console:</h1>
+            <div className="flex flex-row items-center gap-5">
+              <UserButton />
+              <ThemeToggle />
+            </div>
           </div>
-          {/* <HomeDesc /> */}
-          {/* <ResultLogs /> */}
-          <Output /> 
+          {!running ? (
+            <HomeDesc />
+          ) : (
+            <>
+              <Output />
+              <ListSubTop />
+            </>
+          )}
+          {running && <ResultLogs />}
         </main>
       </div>
     </div>
