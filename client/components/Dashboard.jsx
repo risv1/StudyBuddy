@@ -3,10 +3,11 @@ import SheetSidebar from "./SheetSidebar";
 import { Card, CardHeader, CardContent, CardDescription } from "./ui/card";
 import ThemeToggle from "./ThemeToggle";
 
+
 export const Dashboard = () => {
   return (
     <div className="min-h-screen w-screen flex flex-row dark:bg-black bg-gray-200">
-      <div className="w-1/3 hidden border-r bg-muted/40 md:block">
+      <div className="w-1/3 hidden border-r dark:border-slate-700 border-gray-400 bg-muted/40 md:block">
         <Sidebar />
       </div>
       <div className="flex flex-col lg:w-2/3 xl:w-2/3 sm:w-full md:w-full">
@@ -20,7 +21,7 @@ export const Dashboard = () => {
           </div>
           <Card className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <Card>
-                <CardHeader></CardHeader>
+              <CardHeader></CardHeader>
             </Card>
           </Card>
         </main>
@@ -29,7 +30,8 @@ export const Dashboard = () => {
   );
 };
 
-{/* <DropdownMenu>
+{
+  /* <DropdownMenu>
 <DropdownMenuTrigger asChild>
   <Button variant="secondary" size="icon" className="rounded-full">
     <CircleUser className="h-5 w-5" />
@@ -44,4 +46,5 @@ export const Dashboard = () => {
   <DropdownMenuSeparator />
   <DropdownMenuItem>Logout</DropdownMenuItem>
 </DropdownMenuContent>
-</DropdownMenu> */}
+</DropdownMenu> */
+}
