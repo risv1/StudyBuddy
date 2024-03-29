@@ -1,6 +1,7 @@
 import { Button } from "./ui/button";
 import Sidebar from "./Sidebar";
 import SheetSidebar from "./SheetSidebar";
+import { Card, CardHeader, CardContent, CardDescription } from "./ui/card";
 
 export const Dashboard = () => {
   return (
@@ -17,7 +18,9 @@ export const Dashboard = () => {
             <h1 className="text-lg font-semibold md:text-2xl">Results:</h1>
           </div>
           <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-            
+            <Card>
+                <CardHeader></CardHeader>
+            </Card>
           </div>
         </main>
       </div>
