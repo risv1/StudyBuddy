@@ -1,8 +1,7 @@
 import Sidebar from "./Sidebar";
 import SheetSidebar from "./SheetSidebar";
-import { Card, CardHeader, CardContent, CardDescription } from "./ui/card";
+import { Card, CardHeader } from "./ui/card";
 import ThemeToggle from "./ThemeToggle";
-
 
 export const Dashboard = () => {
   return (
@@ -20,31 +19,12 @@ export const Dashboard = () => {
             <ThemeToggle />
           </div>
           <Card className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-            <Card>
-              <CardHeader></CardHeader>
-            </Card>
+            <div className="mt-auto border w-4/5 h-1/3">
+                
+            </div>
           </Card>
         </main>
       </div>
     </div>
   );
 };
-
-{
-  /* <DropdownMenu>
-<DropdownMenuTrigger asChild>
-  <Button variant="secondary" size="icon" className="rounded-full">
-    <CircleUser className="h-5 w-5" />
-    <span className="sr-only">Toggle user menu</span>
-  </Button>
-</DropdownMenuTrigger>
-<DropdownMenuContent align="end">
-  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-  <DropdownMenuSeparator />
-  <DropdownMenuItem>Settings</DropdownMenuItem>
-  <DropdownMenuItem>Support</DropdownMenuItem>
-  <DropdownMenuSeparator />
-  <DropdownMenuItem>Logout</DropdownMenuItem>
-</DropdownMenuContent>
-</DropdownMenu> */
-}
