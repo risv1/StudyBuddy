@@ -7,9 +7,7 @@ import {
 } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
 import { usePrompt } from "../layouts/PromptProvider";
-import logo from "../public/logo.png";
-import image from "../public/image.png";
-import Image from "next/image";
+import { Button } from "./ui/button";
 import { Copy } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
@@ -17,46 +15,16 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./ui/accordion"
-
+} from "./ui/accordion";
 
 const Output = () => {
-    const { positionInfo,running } = usePrompt();
-    const { theme } = useTheme()
+  const { positionInfo, running, saveResultsToLocalStorage } = usePrompt();
+  const { theme } = useTheme();
 
-    // const positionInfo = [
-    //   {
-    //     article_urls: [
-    //       "https://www.example.com",
-    //       "https://www.example.com",
-    //     ],
-    //     youtube_urls: [
-    //       {
-    //         name: "Interview with John Doe",
-    //         url: "https://www.youtube.com/watch?v=123456",
-    //       },
-    //       {
-    //         name: "Interview with Jane Doe",
-    //         url: "https://www.youtube.com/watch?v=789101",
-    //       },
-    //     ],
-    //     subject: "math",
-    //     topic: "algebra",
-    //     quicstart_pointers: [
-    //       "https://www.example.com",
-    //       "https://www.example.com",
-    //     ],
-    //   },
-    // ];
-
-
-   // const positionInfo = [
+  // const positionInfo = [
   //   {
-  //     blog_articles_urls: [
-  //       "https://www.example.com",
-  //       "https://www.example.com",
-  //     ],
-  //     youtube_interviews_urls: [
+  //     article_urls: ["https://www.example.com", "https://www.example.com"],
+  //     youtube_urls: [
   //       {
   //         name: "Interview with John Doe",
   //         url: "https://www.youtube.com/watch?v=123456",
@@ -68,6 +36,10 @@ const Output = () => {
   //     ],
   //     subject: "math",
   //     topic: "algebra",
+  //     quicstart_pointers: [
+  //       "https://www.example.com",
+  //       "https://www.example.com",
+  //     ],
   //   },
   // ];
 
@@ -92,30 +64,15 @@ const Output = () => {
         <CardHeader>
           <CardTitle>Result</CardTitle>
         </CardHeader>
-        <CardContent className="h-full w-full">
+        <CardContent className="h-full w-full flex flex-row">
           <CardDescription>Results will be displayed here.</CardDescription>
           <div className="w-full h-4/5 flex flex-row">
-            <Card className="ml-10 flex flex-1 flex-col items-center justify-center rounded-lg">
-              <div className="w-full h-fit border flex flex-col gap-5 justify-center items-center">
-                <Image
-                  alt="Logo"
-                  className="border-none rounded-lg object-contain aspect-none block dark:hidden"
-                  src={logo}
-                />
-                <Image
-                  alt="Logo"
-                  className="border-none  rounded-lg object-contain aspect-none hidden dark:block"
-                  src={image}
-                />
-              </div>
-            </Card>
-            <ScrollArea className="w-3/4 flex lg:pl-56 pr-10 justify-center items-center">
-              {
-                positionInfo.length === 0 && !running && 
+            <ScrollArea className="w-3/4 flex ml-auto pr-10 mr-20 justify-center items-center">
+              {positionInfo.length === 0 && !running && (
                 <div className="w-full h-full flex justify-center items-center">
                   <p className="text-lg font-medium">No results to display</p>
                 </div>
-              }
+              )}
               {positionInfo.length == 0 && running ? (
                 <div className="w-full h-full flex justify-center items-center">
                   <p className="text-lg font-medium">Loading, please wait...</p>
@@ -127,7 +84,9 @@ const Output = () => {
                       className="absolute top-0 right-0 pr-10 z-10 hover:cursor-pointer"
                       onClick={() => copyText(`result_${index}`)}
                     >
-                      <Copy color={`${theme === "light" ? "#000000"  : "#ffffff" }`}  />
+                      <Copy
+                        color={`${theme === "light" ? "#000000" : "#ffffff"}`}
+                      />
                     </div>
                     <div
                       key={index}
@@ -145,78 +104,88 @@ const Output = () => {
                       <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
                           <AccordionTrigger>Quickstart</AccordionTrigger>
-                          <AccordionContent><ul>
-                          {position.quicstart_pointers.length === 0 ? (
-                            <li>No youtube videos</li>
-                          ) : (
-                            position.quicstart_pointers.map(
-                              (point, index) => (
-                                <li key={index} target="blank">
-                                  <p
-                                    className="text-lg"
-                                  >
-                                    {point}
-                                  </p>
-                                </li>
-                              )
-                            )
-                          )}
-                        </ul>
-                        </AccordionContent>
+                          <AccordionContent>
+                            <ul>
+                              {position.quicstart_pointers.length === 0 ? (
+                                <li>No youtube videos</li>
+                              ) : (
+                                position.quicstart_pointers.map(
+                                  (point, index) => (
+                                    <li key={index} target="blank">
+                                      <p className="text-lg">{point}</p>
+                                    </li>
+                                  )
+                                )
+                              )}
+                            </ul>
+                          </AccordionContent>
                         </AccordionItem>
                       </Accordion>
                       <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
-                          <AccordionTrigger>  Blog Articles URLS</AccordionTrigger>
-                          <AccordionContent><ul>
-                          {position.article_urls.length === 0 ? (
-                            <li>No blog articles</li>
-                          ) : (
-                            position.article_urls.map((url, index) => (
-                              <li key={index} target="_blank">
-                                <a
-                                  className="text-green-500 underline"
-                                  rel="noreferrer"
-                                  href={url}
-                                >
-                                  {url}
-                                </a>
-                              </li>
-                            ))
-                          )}
-                        </ul>
-                        </AccordionContent>
+                          <AccordionTrigger>
+                            {" "}
+                            Blog Articles URLS
+                          </AccordionTrigger>
+                          <AccordionContent>
+                            <ul>
+                              {position.article_urls.length === 0 ? (
+                                <li>No blog articles</li>
+                              ) : (
+                                position.article_urls.map((url, index) => (
+                                  <li key={index}>
+                                    <a
+                                      className="text-green-500 underline"
+                                      rel="noreferrer"
+                                      href={url}
+                                      target="_blank"
+                                    >
+                                      {url}
+                                    </a>
+                                  </li>
+                                ))
+                              )}
+                            </ul>
+                          </AccordionContent>
                         </AccordionItem>
                       </Accordion>
                       <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
                           <AccordionTrigger>Youtube Videos</AccordionTrigger>
-                          <AccordionContent><ul>
-                          {position.youtube_urls.length === 0 ? (
-                            <li>No youtube videos</li>
-                          ) : (
-                            position.youtube_urls.map(
-                              (video, index) => (
-                                <li key={index} target="blank">
-                                  <a
-                                    className="text-green-500 underline"
-                                    rel="noreferrer"
-                                    href={video.url}
-                                  >
-                                    {video.name}
-                                  </a>
-                                </li>
-                              )
-                            )
-                          )}
-                        </ul>
-                        </AccordionContent>
+                          <AccordionContent>
+                            <ul>
+                              {position.youtube_urls.length === 0 ? (
+                                <li>No youtube videos</li>
+                              ) : (
+                                position.youtube_urls.map((video, index) => (
+                                  <li key={index}>
+                                    <a
+                                      className="text-green-500 underline"
+                                      rel="noreferrer"
+                                      target="_blank"
+                                      href={video.url}
+                                    >
+                                      {video.name}
+                                    </a>
+                                  </li>
+                                ))
+                              )}
+                            </ul>
+                          </AccordionContent>
                         </AccordionItem>
                       </Accordion>
                     </div>
                   </>
                 ))
               )}
+            {
+              
+            }
+              <div className="mb-10">
+                <Button onClick={saveResultsToLocalStorage}>
+                  Save Results
+                </Button>
+              </div>
             </ScrollArea>
           </div>
         </CardContent>

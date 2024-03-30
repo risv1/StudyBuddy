@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import { Home, Package, ListStart } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
 import {
   Card,
   CardContent,
@@ -15,7 +16,16 @@ import { Button } from "./ui/button";
 import { usePrompt } from "../layouts/PromptProvider";
 
 const Sidebar = () => {
-  const { subjects, setSubjects, topics, setTopics, startJob, running, positionInfo, setPositionInfo } = usePrompt();
+  const {
+    subjects,
+    setSubjects,
+    topics,
+    setTopics,
+    startJob,
+    running,
+  } = usePrompt();
+
+  const {his} = usePrompt();
 
   const subjectRef = useRef();
   const topicRef = useRef();
@@ -58,7 +68,7 @@ const Sidebar = () => {
               </CardHeader>
               <CardContent className="flex flex-row gap-3">
                 <Input
-                maxLength="20"
+                  maxLength="20"
                   ref={subjectRef}
                   type="text"
                   placeholder="Enter subject"
@@ -71,22 +81,82 @@ const Sidebar = () => {
             </Card>
             <Card>
               <CardHeader className="flex flex-row justify-center items-center gap-2">
-              <ListStart className="h-5 w-5" />
+                <ListStart className="h-5 w-5" />
                 <CardTitle>Topics</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-row justify-center items-center gap-3">
                 <Input
-                maxLength="20"
+                  maxLength="20"
                   ref={topicRef}
                   type="text"
                   placeholder="Enter topic"
                   className="border border-black focus:outline-none"
                 />
-                <Button disabled={running} onClick={addTopic}>Add Topic</Button>
+                <Button disabled={running} onClick={addTopic}>
+                  Add Topic
+                </Button>
               </CardContent>
             </Card>
-           <Button disabled={running || subjects.length === 0 || topics.length === 0} onClick={()=>startJob()}>Submit</Button>
-            <Button disabled={()=>positionInfo.length === 0} onClick={()=>setPositionInfo([])}>Reset</Button>
+            <Button
+              disabled={running || subjects.length === 0 || topics.length === 0}
+              onClick={() => startJob()}
+            >
+              Submit
+            </Button>
+            {/* <Button
+              disabled={() => positionInfo.length === 0}
+              onClick={() => setPositionInfo([])}
+            >
+              Reset
+            </Button> */}
+            <Dialog>
+              <DialogTrigger>Show History</DialogTrigger>
+
+              <DialogContent className="w-2/3 h-4/5 flex flex-col">
+                <div className="w-full h-full flex flex-col">
+                  <ScrollArea className="flex flex-col">
+                    {his.map((position, index) => (
+                      <div key={index}>
+                        <h1 className="mt-5">Result: {index + 1}</h1>
+                        <h2>Subject: {position.subject}</h2>
+                        <p>Topic: {position.topic}</p>
+                        <ul>
+                          {position.article_urls.map((url, idx) => (
+                            <li key={idx}>
+                              <a
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {url}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                        <ul>
+                          {position.youtube_urls.map((video, idx) => (
+                            <li key={idx}>
+                              <a
+                                href={video.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {video.name}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                        <ul>
+                          {position.quicstart_pointers.map((pointer, idx) => (
+                            <li key={idx}>{pointer}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </ScrollArea>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>

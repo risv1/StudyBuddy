@@ -12,7 +12,28 @@ const PromptProvider = ({ children }) => {
   const [positionInfo, setPositionInfo] = useState([]);
   const [running, setRunning] = useState(false);
   const [currentJob, setCurrentJob] = useState("");
+  const [his, setHis] = useState([]);
     
+  const saveResultsToLocalStorage = () => {
+    const existingItems =
+      JSON.parse(localStorage.getItem("positionInfo")) || [];
+
+    const updatedItems = [...existingItems, ...positionInfo];
+
+    localStorage.setItem("positionInfo", JSON.stringify(updatedItems));
+    setHis(updatedItems);
+  };
+
+
+  useEffect(() => {
+    const storedPositionInfo = localStorage.getItem("positionInfo");
+
+    if (storedPositionInfo) {
+      const parsedPositionInfo = JSON.parse(storedPositionInfo);
+      setHis(parsedPositionInfo);
+    }
+  }, []);
+
   useEffect(() => {
     let intervalId;
 
@@ -100,6 +121,9 @@ const PromptProvider = ({ children }) => {
         events,
         positionInfo,
         running,
+        his,
+        saveResultsToLocalStorage,
+        setPositionInfo,
         setSubjects,
         setTopics,
         removeSubject,
