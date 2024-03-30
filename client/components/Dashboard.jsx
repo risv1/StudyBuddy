@@ -6,13 +6,13 @@ import HomeDesc from "./HomeDesc";
 import Output from "./Output";
 import { usePrompt } from "@/layouts/PromptProvider";
 import ListSubTop from "./ListSubTop";
-import { UserButton } from "@clerk/nextjs"; 
+import { UserButton } from "@clerk/nextjs";
 
 export const Dashboard = () => {
   const { running } = usePrompt();
 
   return (
-    <div className="min-h-screen w-screen flex flex-row dark:bg-black bg-gray-200">
+    <div className="w-full flex flex-row dark:bg-black bg-gray-200">
       <div className="w-1/3 hidden border-r dark:border-slate-700 border-gray-400 bg-muted/40 md:block">
         <Sidebar />
       </div>
@@ -28,14 +28,10 @@ export const Dashboard = () => {
               <ThemeToggle />
             </div>
           </div>
-          {!running ? (
-            <HomeDesc />
-          ) : (
-            <>
-              <Output />
-              <ListSubTop />
-            </>
-          )}
+          {!running && <HomeDesc />}
+                <Output />
+                <ListSubTop />
+
           {running && <ResultLogs />}
         </main>
       </div>

@@ -5,7 +5,7 @@ import { Dashboard } from "@/components/Dashboard";
 const WorkPage = () => {
 
   return (
-    <div>
+    <div className="w-screen h-screen dark:bg-black bg-gray-200">
       <Dashboard />
     </div>
   );

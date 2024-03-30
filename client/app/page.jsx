@@ -105,9 +105,9 @@ const Home = () => {
           </Link>
           <Link
               className="inline-flex items-center space-x-2 font-bold"
-              href="/login"
+              href="/work"
             >
-              Login
+              Console
             </Link>
         </footer>
       </div>

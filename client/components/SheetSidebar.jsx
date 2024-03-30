@@ -1,9 +1,9 @@
 "use client";
 
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Input } from "./ui/input";
-import { Home, Package } from "lucide-react";
+import { Home, Package, Menu } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -13,11 +13,10 @@ import {
 } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { usePrompt } from "../layouts/PromptProvider";
 
 const SheetSidebar = () => {
-  const [topics, setTopics] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  const { subjects, setSubjects, topics, setTopics, startJob, running } = usePrompt();
 
   const subjectRef = useRef();
   const topicRef = useRef();
@@ -37,18 +36,6 @@ const SheetSidebar = () => {
     }
   };
 
-  const removeSubject = (index) => {
-    const updatedSubjects = [...subjects];
-    updatedSubjects.splice(index, 1);
-    setSubjects(updatedSubjects);
-  };
-
-  const removeTopic = (index) => {
-    const updatedTopics = [...topics];
-    updatedTopics.splice(index, 1);
-    setTopics(updatedTopics);
-  };
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -58,111 +45,61 @@ const SheetSidebar = () => {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col">
-        <ScrollArea>
-          <div className="w-full flex h-full max-h-screen flex-col items-center gap-2">
-            <div className="w-4/5 h-full mt-5">
-              <div className="w-full h-[40%] flex flex-col gap-3">
-                <Card>
-                  <CardHeader>
-                    <Package className="h-6 w-6" />
-                    <CardTitle>StudyBuddy</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription>
-                      Enter subject and topics to search
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row justify-center items-center gap-2">
-                    <Home className="h-5 w-5" />
-                    <CardTitle>Subjects</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-row gap-3">
-                    <Input
-                      maxLength="20"
-                      ref={subjectRef}
-                      type="text"
-                      placeholder="Enter subject"
-                      className="border border-black focus:outline-none"
-                    />
-                    <Button onClick={addSubject}>Add Subject</Button>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row justify-center items-center gap-2">
-                    <Home className="h-5 w-5" />
-                    <CardTitle>Topics</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-row justify-center items-center gap-3">
-                    <Input
-                      maxLength="20"
-                      ref={topicRef}
-                      type="text"
-                      placeholder="Enter topic"
-                      className="border border-black focus:outline-none"
-                    />
-                    <Button onClick={addTopic}>Add Topic</Button>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Added Subjects</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex justify-center overflow-y-auto">
-                    <ScrollArea className="w-full h-full flex pl-10">
-                      <div className="w-2/3 max-h-48 flex flex-col">
-                        <ul className="flex flex-col gap-3">
-                          {subjects.map((subject, index) => (
-                            <li
-                              key={index}
-                              className="flex items-center justify-between flex-row"
-                            >
-                              <span className="text-lg">{subject}</span>
-                              <Button
-                                className="text-xs bg-red-500 hover:bg-red-700 dark:text-white dark:bg-red-500 dark:hover:bg-red-700"
-                                onClick={() => removeSubject(index)}
-                              >
-                                Remove
-                              </Button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Added topics</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex justify-center overflow-y-auto">
-                    <ScrollArea className="w-full h-full flex pl-10">
-                      <div className="w-2/3 max-h-48 flex flex-col">
-                        <ul className="flex flex-col gap-3">
-                          {topics.map((topic, index) => (
-                            <li
-                              key={index}
-                              className="flex items-center justify-between flex-row"
-                            >
-                              <span className="text-lg">{topic}</span>
-                              <Button
-                                className="text-xs bg-red-500 hover:bg-red-700 dark:text-white dark:bg-red-500 dark:hover:bg-red-700"
-                                onClick={() => removeTopic(index)}
-                              >
-                                Remove
-                              </Button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </ScrollArea>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
+      <ScrollArea className="pb-3 ">
+      <div className="w-full flex h-full max-h-screen flex-col items-center gap-2">
+        <div className="w-4/5 h-full mt-5">
+          <div className="w-full h-[40%] flex flex-col gap-3">
+            <Card>
+              <CardHeader>
+                <Package className="h-6 w-6" />
+                <CardTitle>StudyBuddy</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>
+                  Enter subject and topics to search
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row justify-center items-center gap-2">
+                <Home className="h-5 w-5" />
+                <CardTitle>Subjects</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-row gap-3">
+                <Input
+                maxLength="20"
+                  ref={subjectRef}
+                  type="text"
+                  placeholder="Enter subject"
+                  className="border border-black focus:outline-none"
+                />
+                <Button disabled={running} onClick={addSubject}>
+                  Add Subject
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row justify-center items-center gap-2">
+                <Home className="h-5 w-5" />
+                <CardTitle>Topics</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-row justify-center items-center gap-3">
+                <Input
+                maxLength="20"
+                  ref={topicRef}
+                  type="text"
+                  placeholder="Enter topic"
+                  className="border border-black focus:outline-none"
+                />
+                <Button disabled={running} onClick={addTopic}>Add Topic</Button>
+              </CardContent>
+            </Card>
+           
+            <Button disabled={running || subjects.length === 0 || topics.length === 0} onClick={()=>startJob()}>Submit</Button>
           </div>
-        </ScrollArea>
+        </div>
+      </div>
+    </ScrollArea>
       </SheetContent>
     </Sheet>
   );

@@ -11,20 +11,19 @@ const HomeDesc = () => {
 
   return (
     <>
-      <ListSubTop />
       {subjects.length === 0 && topics.length === 0 && (
       <Card className="flex flex-1 flex-col items-center pb-10 justify-center rounded-lg border border-dashed shadow-sm">
         <div className="w-full h-2/5 flex flex-col gap-5 justify-center items-center">
           <Image
             alt="Logo"
-            className="rounded-lg object-contain aspect-none block dark:hidden"
+            className="mt-5 rounded-lg object-contain aspect-none block dark:hidden"
             height="50"
             src={logo}
             width="200"
           />
           <Image
             alt="Logo"
-            className="rounded-lg object-contain aspect-none hidden dark:block"
+            className="mt-5 rounded-lg object-contain aspect-none hidden dark:block"
             height="50"
             src={image}
             width="200"

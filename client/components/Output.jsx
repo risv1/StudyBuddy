@@ -14,29 +14,29 @@ import { Copy } from "lucide-react";
 import { useTheme } from "next-themes";
 
 const Output = () => {
-  //   const { positionInfo } = usePrompt();
+  const { positionInfo, running } = usePrompt();
     const { theme } = useTheme()
 
-  const positionInfo = [
-    {
-      blog_articles_urls: [
-        "https://www.example.com",
-        "https://www.example.com",
-      ],
-      youtube_interviews_urls: [
-        {
-          name: "Interview with John Doe",
-          url: "https://www.youtube.com/watch?v=123456",
-        },
-        {
-          name: "Interview with Jane Doe",
-          url: "https://www.youtube.com/watch?v=789101",
-        },
-      ],
-      subject: "math",
-      topic: "algebra",
-    },
-  ];
+  // const positionInfo = [
+  //   {
+  //     blog_articles_urls: [
+  //       "https://www.example.com",
+  //       "https://www.example.com",
+  //     ],
+  //     youtube_interviews_urls: [
+  //       {
+  //         name: "Interview with John Doe",
+  //         url: "https://www.youtube.com/watch?v=123456",
+  //       },
+  //       {
+  //         name: "Interview with Jane Doe",
+  //         url: "https://www.youtube.com/watch?v=789101",
+  //       },
+  //     ],
+  //     subject: "math",
+  //     topic: "algebra",
+  //   },
+  // ];
 
   function copyText(elementId) {
     const element = document.getElementById(elementId);
@@ -62,28 +62,30 @@ const Output = () => {
         <CardContent className="h-full w-full">
           <CardDescription>Results will be displayed here.</CardDescription>
           <div className="w-full h-4/5 flex flex-row">
-            <Card className="lg:pl-20 border-none flex flex-1 flex-col items-center pb-10 justify-center rounded-lg shadow-sm">
-              <div className="w-full h-2/5 flex flex-col gap-5 justify-center items-center">
+            <Card className="ml-10 flex flex-1 flex-col items-center justify-center rounded-lg">
+              <div className="w-full h-fit border flex flex-col gap-5 justify-center items-center">
                 <Image
                   alt="Logo"
                   className="border-none rounded-lg object-contain aspect-none block dark:hidden"
-                  height="50"
                   src={logo}
-                  width="300"
                 />
                 <Image
                   alt="Logo"
                   className="border-none  rounded-lg object-contain aspect-none hidden dark:block"
-                  height="50"
                   src={image}
-                  width="300"
                 />
               </div>
             </Card>
             <ScrollArea className="w-3/4 flex lg:pl-56 justify-center items-center">
-              {positionInfo.length == 0 ? (
+              {
+                positionInfo.length === 0 && !running && 
                 <div className="w-full h-full flex justify-center items-center">
-                  <p>No results to display</p>
+                  <p className="text-lg font-medium">No results to display</p>
+                </div>
+              }
+              {positionInfo.length == 0 && running ? (
+                <div className="w-full h-full flex justify-center items-center">
+                  <p className="text-lg font-medium">Loading, please wait...</p>
                 </div>
               ) : (
                 positionInfo.map((position, index) => (
@@ -108,14 +110,36 @@ const Output = () => {
                         {capitalize(position.topic)}
                       </p>
                       <div className="text-lg">
+                        <strong className="text-xl">Quickstart: </strong>
+                        <ul>
+                          {position.quicstart_pointers.length === 0 ? (
+                            <li>No youtube videos</li>
+                          ) : (
+                            position.quicstart_pointers.map(
+                              (video, index) => (
+                                <li key={index} target="blank">
+                                  <a
+                                    className="text-white text-lg"
+                                    rel="noreferrer"
+                                    href={video.url}
+                                  >
+                                    {video.name}
+                                  </a>
+                                </li>
+                              )
+                            )
+                          )}
+                        </ul>
+                      </div>
+                      <div className="text-lg">
                         <strong className="text-xl">
                           Blog Articles URLS:{" "}
                         </strong>
                         <ul>
-                          {position.blog_articles_urls.length === 0 ? (
+                          {position.article_urls.length === 0 ? (
                             <li>No blog articles</li>
                           ) : (
-                            position.blog_articles_urls.map((url, index) => (
+                            position.article_urls.map((url, index) => (
                               <li key={index} target="_blank">
                                 <a
                                   className="text-green-500 underline"
@@ -132,10 +156,10 @@ const Output = () => {
                       <div className="text-lg">
                         <strong className="text-xl">Youtube Videos: </strong>
                         <ul>
-                          {position.youtube_interviews_urls.length === 0 ? (
+                          {position.youtube_urls.length === 0 ? (
                             <li>No youtube videos</li>
                           ) : (
-                            position.youtube_interviews_urls.map(
+                            position.youtube_urls.map(
                               (video, index) => (
                                 <li key={index} target="blank">
                                   <a

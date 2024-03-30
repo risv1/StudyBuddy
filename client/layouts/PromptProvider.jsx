@@ -42,7 +42,6 @@ const PromptProvider = ({ children }) => {
         if (data.status === "COMPLETE" || data.status === "ERROR") {
           clearInterval(intervalId);
             setCurrentJob("");
-            console.log(finalOutput)
           setRunning(false);
         }
       } catch (error) {

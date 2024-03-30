@@ -12,7 +12,7 @@ import {
 } from "./ui/card";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
-import { usePrompt } from "@/layouts/PromptProvider";
+import { usePrompt } from "../layouts/PromptProvider";
 
 const Sidebar = () => {
   const { subjects, setSubjects, topics, setTopics, startJob, running } = usePrompt();
