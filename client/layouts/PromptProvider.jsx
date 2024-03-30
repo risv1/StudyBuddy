@@ -13,17 +13,6 @@ const PromptProvider = ({ children }) => {
   const [running, setRunning] = useState(false);
   const [currentJob, setCurrentJob] = useState("");
   const [his, setHis] = useState([]);
-    
-  const saveResultsToLocalStorage = () => {
-    const existingItems =
-      JSON.parse(localStorage.getItem("positionInfo")) || [];
-
-    const updatedItems = [...existingItems, ...positionInfo];
-
-    localStorage.setItem("positionInfo", JSON.stringify(updatedItems));
-    setHis(updatedItems);
-  };
-
 
   useEffect(() => {
     const storedPositionInfo = localStorage.getItem("positionInfo");
@@ -58,18 +47,18 @@ const PromptProvider = ({ children }) => {
           setPositionInfo(data.result.topics);
         }
         console.log("PositionInfo:", positionInfo);
-        console.log("Events: ", events)
+        console.log("Events: ", events);
 
         if (data.status === "COMPLETE" || data.status === "ERROR") {
           clearInterval(intervalId);
-            setCurrentJob("");
+          setCurrentJob("");
           setRunning(false);
         }
       } catch (error) {
         console.log(error);
         setCurrentJob("");
-        if(intervalId) {
-          clearInterval(intervalId)
+        if (intervalId) {
+          clearInterval(intervalId);
         }
       }
     };
@@ -78,6 +67,32 @@ const PromptProvider = ({ children }) => {
       intervalId = setInterval(fetchJobStatus, 1000);
     }
   }, [currentJob]);
+
+  useEffect(() => {
+    if (positionInfo.length > 0) {
+      saveResultsToLocalStorage(positionInfo);
+    }
+  }, [positionInfo]);
+
+  const saveResultsToLocalStorage = (positionInfo) => {
+    const existingItems =
+      JSON.parse(localStorage.getItem("positionInfo")) || [];
+    if (existingItems.length > 0) {
+      const updatedItems = [...existingItems, ...positionInfo];
+
+      localStorage.setItem("positionInfo", JSON.stringify(updatedItems));
+      setHis(updatedItems);
+    } else {
+      localStorage.setItem("positionInfo", JSON.stringify(positionInfo));
+      setHis(positionInfo);
+      console.log("saved to local storage");
+    }
+  };
+
+  const clearHistory = () => {
+    localStorage.removeItem("positionInfo");
+    setHis([]);
+  };
 
   const removeSubject = (index) => {
     const updatedSubjects = [...subjects];
@@ -128,6 +143,7 @@ const PromptProvider = ({ children }) => {
         setTopics,
         removeSubject,
         removeTopic,
+        clearHistory,
         startJob,
       }}
     >

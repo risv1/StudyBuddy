@@ -22,7 +22,7 @@ const Results = () => {
         <DialogTrigger>See Logs</DialogTrigger>
 
         <DialogContent>
-          <Card className="w-full h-[85vh]">
+          <div className="w-full h-[85vh] flex justify-center items-center flex-col">
             <CardHeader>
               <CardTitle>Result Logs</CardTitle>
             </CardHeader>
@@ -55,7 +55,7 @@ const Results = () => {
                 </ScrollArea>
               </div>
             </CardContent>
-          </Card>
+          </div>
         </DialogContent>
       </Dialog>
     </>

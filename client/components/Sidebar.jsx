@@ -23,9 +23,11 @@ const Sidebar = () => {
     setTopics,
     startJob,
     running,
+    clearHistory,
+    setPositionInfo,
   } = usePrompt();
 
-  const {his} = usePrompt();
+  const { his } = usePrompt();
 
   const subjectRef = useRef();
   const topicRef = useRef();
@@ -44,6 +46,12 @@ const Sidebar = () => {
       subjectRef.current.value = "";
     }
   };
+
+  const clearValues = () => {
+    setSubjects([]);
+    setTopics([]);
+    setPositionInfo([]);
+  }
 
   return (
     <ScrollArea className="pb-3 ">
@@ -97,36 +105,59 @@ const Sidebar = () => {
                 </Button>
               </CardContent>
             </Card>
+            {
+              subjects.length === 0 && topics.length > 0 && (
+                <p className="text-sm text-red-500">Please add a subject to start search.</p>
+            )}
+            {
+              subjects.length > 0 && topics.length === 0 && (
+                <p className="text-sm text-red-500">Please add a topic to start search.</p>
+            )}
+            {
+              subjects.length > 0 && topics.length > 0 && (
+                <p className="text-sm text-green-500">Please click submit to start the search</p>
+              )
+            }
             <Button
               disabled={running || subjects.length === 0 || topics.length === 0}
               onClick={() => startJob()}
             >
               Submit
             </Button>
-            {/* <Button
-              disabled={() => positionInfo.length === 0}
-              onClick={() => setPositionInfo([])}
-            >
-              Reset
-            </Button> */}
+            <Button onClick={clearValues} >Reset</Button>
             <Dialog>
               <DialogTrigger>Show History</DialogTrigger>
 
-              <DialogContent className="w-2/3 h-4/5 flex flex-col">
+              <DialogContent className="w-full h-4/5 flex flex-col">
                 <div className="w-full h-full flex flex-col">
-                  <ScrollArea className="flex flex-col">
+                  <ScrollArea className="flex flex-col h-5/6 pr-10">
+                    {his.length === 0 && (
+                      <div className="w-full h-full flex justify-center items-center">
+                        <p className="text-lg font-medium">
+                          No results to display
+                        </p>
+                      </div>
+                    )}
                     {his.map((position, index) => (
                       <div key={index}>
                         <h1 className="mt-5">Result: {index + 1}</h1>
                         <h2>Subject: {position.subject}</h2>
                         <p>Topic: {position.topic}</p>
+                        <p>Quickstart: </p>
                         <ul>
+                          {position.quicstart_pointers.map((pointer, idx) => (
+                            <li key={idx}>{pointer}</li>
+                          ))}
+                        </ul>
+                        <ul>
+                          <p>Articles: </p>
                           {position.article_urls.map((url, idx) => (
                             <li key={idx}>
                               <a
+                              className="text-green-600"
                                 href={url}
                                 target="_blank"
-                                rel="noopener noreferrer"
+                                rel="noreferrer"
                               >
                                 {url}
                               </a>
@@ -134,9 +165,11 @@ const Sidebar = () => {
                           ))}
                         </ul>
                         <ul>
+                        <p>Videos: </p>
                           {position.youtube_urls.map((video, idx) => (
                             <li key={idx}>
                               <a
+                                className="text-green-600"
                                 href={video.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -146,14 +179,10 @@ const Sidebar = () => {
                             </li>
                           ))}
                         </ul>
-                        <ul>
-                          {position.quicstart_pointers.map((pointer, idx) => (
-                            <li key={idx}>{pointer}</li>
-                          ))}
-                        </ul>
                       </div>
                     ))}
                   </ScrollArea>
+                  <Button onClick={() => clearHistory()} className="mt-10">Clear</Button>
                 </div>
               </DialogContent>
             </Dialog>

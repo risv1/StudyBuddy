@@ -2,7 +2,7 @@ import { usePrompt } from "../layouts/PromptProvider";
 
 const Description = () => {
 
-  const { subjects, topics, setSubjects, setTopics } = usePrompt()
+  const { setSubjects, setTopics } = usePrompt()
 
   const handleAdd = (subject, topic) => {
     setSubjects((prevSubjects) => [...prevSubjects, subject]);

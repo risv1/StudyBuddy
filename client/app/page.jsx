@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/logo.png";
 import image from "@/public/image.png";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Home = () => {
   return (

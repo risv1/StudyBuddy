@@ -18,30 +18,30 @@ import {
 } from "./ui/accordion";
 
 const Output = () => {
-  const { positionInfo, running, saveResultsToLocalStorage } = usePrompt();
-  const { theme } = useTheme();
-
-  // const positionInfo = [
-  //   {
-  //     article_urls: ["https://www.example.com", "https://www.example.com"],
-  //     youtube_urls: [
-  //       {
-  //         name: "Interview with John Doe",
-  //         url: "https://www.youtube.com/watch?v=123456",
-  //       },
-  //       {
-  //         name: "Interview with Jane Doe",
-  //         url: "https://www.youtube.com/watch?v=789101",
-  //       },
-  //     ],
-  //     subject: "math",
-  //     topic: "algebra",
-  //     quicstart_pointers: [
-  //       "https://www.example.com",
-  //       "https://www.example.com",
-  //     ],
-  //   },
-  // ];
+  const { positionInfo, running } = usePrompt();
+  const { theme } = useTheme()
+  
+  //  const positionInfo = [
+  //    {
+  //      article_urls: ["https://www.example.com", "https://www.example.com"],
+  //      youtube_urls: [
+  //        {
+  //          name: "Interview with John Doe",
+  //          url: "https://www.youtube.com/watch?v=123456",
+  //        },
+  //        {
+  //          name: "Interview with Jane Doe",
+  //          url: "https://www.youtube.com/watch?v=789101",
+  //        },
+  //      ],
+  //      subject: "math",
+  //      topic: "algebra",
+  //      quicstart_pointers: [
+  //        "https://www.example.com",
+  //        "https://www.example.com",
+  //      ],
+  //    },
+  //  ];
 
   function copyText(elementId) {
     const element = document.getElementById(elementId);
@@ -178,14 +178,6 @@ const Output = () => {
                   </>
                 ))
               )}
-            {
-              
-            }
-              <div className="mb-10">
-                <Button onClick={saveResultsToLocalStorage}>
-                  Save Results
-                </Button>
-              </div>
             </ScrollArea>
           </div>
         </CardContent>
