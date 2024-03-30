@@ -12,12 +12,45 @@ import image from "../public/image.png";
 import Image from "next/image";
 import { Copy } from "lucide-react";
 import { useTheme } from "next-themes";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion"
+
 
 const Output = () => {
-  const { positionInfo, running } = usePrompt();
+    const { positionInfo,running } = usePrompt();
     const { theme } = useTheme()
 
-  // const positionInfo = [
+    // const positionInfo = [
+    //   {
+    //     article_urls: [
+    //       "https://www.example.com",
+    //       "https://www.example.com",
+    //     ],
+    //     youtube_urls: [
+    //       {
+    //         name: "Interview with John Doe",
+    //         url: "https://www.youtube.com/watch?v=123456",
+    //       },
+    //       {
+    //         name: "Interview with Jane Doe",
+    //         url: "https://www.youtube.com/watch?v=789101",
+    //       },
+    //     ],
+    //     subject: "math",
+    //     topic: "algebra",
+    //     quicstart_pointers: [
+    //       "https://www.example.com",
+    //       "https://www.example.com",
+    //     ],
+    //   },
+    // ];
+
+
+   // const positionInfo = [
   //   {
   //     blog_articles_urls: [
   //       "https://www.example.com",
@@ -76,7 +109,7 @@ const Output = () => {
                 />
               </div>
             </Card>
-            <ScrollArea className="w-3/4 flex lg:pl-56 justify-center items-center">
+            <ScrollArea className="w-3/4 flex lg:pl-56 pr-10 justify-center items-center">
               {
                 positionInfo.length === 0 && !running && 
                 <div className="w-full h-full flex justify-center items-center">
@@ -109,33 +142,33 @@ const Output = () => {
                         <strong className="mr-5 text-xl">Topic: </strong>
                         {capitalize(position.topic)}
                       </p>
-                      <div className="text-lg">
-                        <strong className="text-xl">Quickstart: </strong>
-                        <ul>
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger>Quickstart</AccordionTrigger>
+                          <AccordionContent><ul>
                           {position.quicstart_pointers.length === 0 ? (
                             <li>No youtube videos</li>
                           ) : (
                             position.quicstart_pointers.map(
-                              (video, index) => (
+                              (point, index) => (
                                 <li key={index} target="blank">
-                                  <a
-                                    className="text-white text-lg"
-                                    rel="noreferrer"
-                                    href={video.url}
+                                  <p
+                                    className="text-lg"
                                   >
-                                    {video.name}
-                                  </a>
+                                    {point}
+                                  </p>
                                 </li>
                               )
                             )
                           )}
                         </ul>
-                      </div>
-                      <div className="text-lg">
-                        <strong className="text-xl">
-                          Blog Articles URLS:{" "}
-                        </strong>
-                        <ul>
+                        </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger>  Blog Articles URLS</AccordionTrigger>
+                          <AccordionContent><ul>
                           {position.article_urls.length === 0 ? (
                             <li>No blog articles</li>
                           ) : (
@@ -152,10 +185,13 @@ const Output = () => {
                             ))
                           )}
                         </ul>
-                      </div>
-                      <div className="text-lg">
-                        <strong className="text-xl">Youtube Videos: </strong>
-                        <ul>
+                        </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger>Youtube Videos</AccordionTrigger>
+                          <AccordionContent><ul>
                           {position.youtube_urls.length === 0 ? (
                             <li>No youtube videos</li>
                           ) : (
@@ -174,7 +210,9 @@ const Output = () => {
                             )
                           )}
                         </ul>
-                      </div>
+                        </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
                     </div>
                   </>
                 ))

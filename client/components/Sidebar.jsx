@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { Input } from "./ui/input";
-import { Home, Package } from "lucide-react";
+import { Home, Package, ListStart } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -15,7 +15,7 @@ import { Button } from "./ui/button";
 import { usePrompt } from "../layouts/PromptProvider";
 
 const Sidebar = () => {
-  const { subjects, setSubjects, topics, setTopics, startJob, running } = usePrompt();
+  const { subjects, setSubjects, topics, setTopics, startJob, running, positionInfo, setPositionInfo } = usePrompt();
 
   const subjectRef = useRef();
   const topicRef = useRef();
@@ -71,7 +71,7 @@ const Sidebar = () => {
             </Card>
             <Card>
               <CardHeader className="flex flex-row justify-center items-center gap-2">
-                <Home className="h-5 w-5" />
+              <ListStart className="h-5 w-5" />
                 <CardTitle>Topics</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-row justify-center items-center gap-3">
@@ -85,8 +85,8 @@ const Sidebar = () => {
                 <Button disabled={running} onClick={addTopic}>Add Topic</Button>
               </CardContent>
             </Card>
-           
-            <Button disabled={running || subjects.length === 0 || topics.length === 0} onClick={()=>startJob()}>Submit</Button>
+           <Button disabled={running || subjects.length === 0 || topics.length === 0} onClick={()=>startJob()}>Submit</Button>
+            <Button disabled={()=>positionInfo.length === 0} onClick={()=>setPositionInfo([])}>Reset</Button>
           </div>
         </div>
       </div>
